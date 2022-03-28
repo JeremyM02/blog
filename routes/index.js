@@ -28,4 +28,7 @@ router.post('/register', userController.register);
 router.get('/login', userController.renderLogin);
 router.post('/login', userController.login);
 router.get('/logout', userController.logout);
+
+router.get('/comment/:commentId/delete', ensureUserAuthenticated, userHasRole('admin'), commentController.deleteComment);
+router.get('/comment/:commentId/reply/:replyId/delete', ensureUserAuthenticated, userHasRole('admin'), commentController.deleteReply);
 module.exports = router;

@@ -75,6 +75,11 @@ module.exports.updateArticle = async function (req, res){
 };
 
 module.exports.deleteArticle = async function(req, res){
+    const article = await Article.findByPk(req.params.articleId);
+    if (!user.is('admin') && !article.isOwnedBy(user)){
+        res.redirect('/');
+        return;
+    }
     await Article.destroy({
         where:{
             id: req.params.articleId
