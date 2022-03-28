@@ -53,6 +53,10 @@ module.exports.displayAll = async function (req, res){
 
 module.exports.renderEditForm = async function (req, res){
     const article = await Article.findByPk(req.params.articleId);
+    if (!article.isOwnedBy(user)){
+        res.redirect('/');
+        return;
+    }
     res.render('articles/edit', {article});
 };
 
