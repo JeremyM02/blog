@@ -1,6 +1,6 @@
 const passport = require('passport');
 const {Strategy} = require('passport-local').Strategy;
-const {User, Role} = require('../models');
+const {User} = require('../models');
 const md5 = require('md5');
 
 //this function is called an authenticate to test if the user's credentials are valid
