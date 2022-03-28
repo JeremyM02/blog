@@ -16,11 +16,11 @@ module.exports.addArticle = async function(req, res){
         intro: req.body.intro,
         image_url: req.body.image_url,
         body: req.body.body,
-        author_id: 1, //todo get logged in user
+        author_id: req.user.id,
         published_on: new Date()
-    })
+    });
     res.redirect('/') //todo change the redirect to view all once made
-}
+};
 
 module.exports.displayArticle = async function(req, res){
     const article = await Article.findByPk(req.params.articleId, {
@@ -49,7 +49,7 @@ module.exports.displayAll = async function (req, res){
         include: ['author']
     });
     res.render('articles/viewAll', {articles});
-}
+};
 
 module.exports.renderEditForm = async function (req, res){
     const article = await Article.findByPk(req.params.articleId);
@@ -68,7 +68,7 @@ module.exports.updateArticle = async function (req, res){
         }
     });
     res.redirect(`/article/${req.params.articleId}`);
-}
+};
 
 module.exports.deleteArticle = async function(req, res){
     await Article.destroy({
