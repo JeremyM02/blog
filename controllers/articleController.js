@@ -61,6 +61,11 @@ module.exports.renderEditForm = async function (req, res){
 };
 
 module.exports.updateArticle = async function (req, res){
+    const article = await Article.findByPk(req.params.articleId);
+    if (!article.isOwnedBy(user)){
+        res.redirect('/');
+        return;
+    }
     await Article.update({
         title: req.body.title,
         intro: req.body.intro,
